@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "test",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/node_modules/jasmine/bin/jasmine.js",
+            "stopOnEntry": false,
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "args": [
+                "--config=${workspaceRoot}/jasmine.json"
+            ],
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "sourceMaps": false,
+            "outDir": null
+        }
+
+    ]
+}
