@@ -1,4 +1,4 @@
-const Logger = require('json-log4js');
+const Logger = require('qnode-log');
 const _ = require('lodash');
 const Path = require('path');
 

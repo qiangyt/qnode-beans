@@ -27,8 +27,8 @@
     "private": false,
     "license": "MIT",
     "dependencies": {
-        "json-log4js": "1.0.0",
-        "lodash": "4.17.4"
+        "lodash": "4.17.4",
+        "qnode-log": "1.0.1"
     },
     "devDependencies": {
         "babel": "6.23.0",
