@@ -1,6 +1,6 @@
 {
-    "name": "node-beans",
-    "version": "1.0.0",
+    "name": "qnode-beans",
+    "version": "1.0.1",
     "description": "Simple node.js DI/IoC",
     "main": "src/Beans.js",
     "scripts": {
@@ -9,7 +9,7 @@
         "lint": "./node_modules/.bin/eslint -f stylish --cache --cache-location ./build/eslint/cache/ --color ./src/",
         "watch": "./node_modules/.bin/esw --watch -f stylish --cache --cache-location ./build/eslint/cache/ --color ./src/"
     },
-    "repository": "git@github.com:qiangyt/node-beans.git",
+    "repository": "git@github.com:qiangyt/qnode-beans.git",
     "author": "Qiang Yiting <qiangyt@wxcount.com> (https://github.com/qiangyt)",
     "keywords": [
         "DI",
@@ -19,7 +19,7 @@
         "node.js"
     ],
     "bugs": {
-        "url": "https://github.com/qiangyt/node-beans/issues"
+        "url": "https://github.com/qiangyt/qnode-beans/issues"
     },
     "engines": {
         "node": ">=6"
