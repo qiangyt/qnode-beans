@@ -93,12 +93,12 @@ class Beans {
 
 const _D = Beans.DEFAULT = new Beans(global.config);
 
-Beans.prepare = _D.prepare;
-Beans.all = _D.all;
-Beans.init = _D.init;
-Beans.render = _D.render;
-Beans.create = _D.create;
-Beans.load = _D.load;
-Beans.get = _D.get;
+Beans.prepare = _D.prepare.bind(_D);
+Beans.all = () => _D.all;
+Beans.init = _D.init.bind(_D);
+Beans.render = _D.render.bind(_D);
+Beans.create = _D.create.bind(_D);
+Beans.load = _D.load.bind(_D);
+Beans.get = _D.get.bind(_D);
 
 module.exports = Beans;
