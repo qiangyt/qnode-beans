@@ -91,6 +91,14 @@ class Beans {
 
 }
 
-Beans.DEFAULT = new Beans(global.config);
+const _D = Beans.DEFAULT = new Beans(global.config);
+
+Beans.prepare = _D.prepare;
+Beans.all = _D.all;
+Beans.init = _D.init;
+Beans.render = _D.render;
+Beans.create = _D.create;
+Beans.load = _D.load;
+Beans.get = _D.get;
 
 module.exports = Beans;
