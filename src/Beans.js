@@ -8,7 +8,8 @@ class Beans {
         this._logger = new Logger('Beans');
         this._all = {};
         this._beansInited = {};
-        this._config = config || global.config || {};
+        const cfg = this._config = config || global.config || {};
+        this.baseDir = (cfg.baseDir === null || cfg.baseDir === undefined) ? Beans.resolveBaseDir() : cfg.baseDir;
     }
 
     prepare(name, beanConfig) {
@@ -60,6 +61,15 @@ class Beans {
         bean._beans = this;
     }
 
+    static resolveBaseDir(mainPath) {
+        mainPath = mainPath || process.mainModule.filename;
+        const posOfNM = mainPath.indexOf('node_modules');
+        if (posOfNM >= 0) {
+            return mainPath.substring(0, posOfNM - 1);
+        }
+        return Path.dirname(mainPath);
+    }
+
     create(beanModulePath, name) {
         if (!name) {
             name = _.lowerFirst(Path.parse(beanModulePath).name);
@@ -68,7 +78,8 @@ class Beans {
         if (this._all[name]) throw new Error(`duplicated bean: ${name}`);
 
         /* eslint global-require: "off" */
-        const clazz = require(beanModulePath);
+        const clazz = require(Path.join(this.baseDir, beanModulePath));
+
         const r = new clazz();
         this.render(r, name, clazz);
 
