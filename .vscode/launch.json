@@ -11,9 +11,6 @@
             "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
             "runtimeExecutable": null,
-            "args": [
-                "--config=${workspaceRoot}/jasmine.json"
-            ],
             "runtimeArgs": [
                 "--nolazy"
             ],

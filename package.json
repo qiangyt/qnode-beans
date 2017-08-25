@@ -1,11 +1,11 @@
 {
     "name": "qnode-beans",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Simple node.js DI/IoC",
     "main": "src/Beans.js",
     "scripts": {
-        "coverage": "JASMINE_CONFIG_PATH=./jasmine.json node ./node_modules/istanbul/lib/cli.js cover -color ./node_modules/jasmine/bin/jasmine.js",
-        "test": "JASMINE_CONFIG_PATH=./jasmine.json node ./node_modules/jasmine/bin/jasmine.js",
+        "coverage": "node ./node_modules/istanbul/lib/cli.js cover -color ./node_modules/jasmine/bin/jasmine.js",
+        "test": "node ./node_modules/jasmine/bin/jasmine.js",
         "lint": "./node_modules/.bin/eslint -f stylish --cache --cache-location ./build/eslint/cache/ --color ./src/",
         "watch": "./node_modules/.bin/esw --watch -f stylish --cache --cache-location ./build/eslint/cache/ --color ./src/"
     },
