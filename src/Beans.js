@@ -54,10 +54,16 @@ class Beans {
     }
 
     render(bean, name, beanModuleAsClass) {
+        const bname = bean._name = name || bean._name;
+
         bean._module = beanModuleAsClass;
-        bean._name = name;
-        bean._logger = new Logger(name);
-        bean._config = this._config[name] || {};
+        bean._logger = new Logger(bname);
+
+        const config = {};
+        _.merge(config, this._config[bname] || {});
+        _.merge(config, bean._config || {});
+        bean._config = config;
+
         bean._beans = this;
     }
 
