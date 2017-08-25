@@ -80,8 +80,8 @@ describe("Bean test suite: ", function() {
         const b = beans.create('Bean2');
 
         expect(b instanceof SpiedBean2).toBeTruthy();
-        expect(b._name).toBe('bean2');
-        expect(beans.get('bean2')).toEqual(b);
+        expect(b._name).toBe('Bean2');
+        expect(beans.get('Bean2')).toEqual(b);
     });
 
     it("create(): duplicated", function() {
@@ -100,11 +100,11 @@ describe("Bean test suite: ", function() {
         const beans = new Beans({ baseDir: '' });
 
         const cfg = { x: 'y' };
-        beans.prepare('bean1', cfg);
+        beans.prepare('Bean1', cfg);
         beans.create('Bean1');
         beans.init();
 
-        const b = beans.load('bean1');
+        const b = beans.load('Bean1');
         expect(b._config.x).toBe('y');
     });
 
@@ -114,7 +114,7 @@ describe("Bean test suite: ", function() {
         beans.create('Bean1');
 
         try {
-            beans.prepare('bean1', cfg);
+            beans.prepare('Bean1', cfg);
             fail('exception is expected to raise');
         } catch (e) {
             expect(e).toBeDefined();
@@ -125,14 +125,14 @@ describe("Bean test suite: ", function() {
         const beans = new Beans({ baseDir: '' });
 
         const cfg1 = { x1: 'y1' };
-        beans.prepare('bean1', cfg1);
+        beans.prepare('Bean1', cfg1);
 
         const cfg2 = { x1: 'y2', x2: 'y3' };
-        beans.prepare('bean1', cfg2);
+        beans.prepare('Bean1', cfg2);
 
         beans.create('Bean1');
         beans.init();
-        const b = beans.load('bean1');
+        const b = beans.load('Bean1');
         expect(b._config.x1).toBe('y2');
         expect(b._config.x2).toBe('y3');
     });
@@ -150,8 +150,8 @@ describe("Bean test suite: ", function() {
     it("load(): found", function() {
         const beans = new Beans({ baseDir: '' });
         beans.create('Bean1');
-        const b = beans.load('bean1');
-        expect(b._name).toBe('bean1');
+        const b = beans.load('Bean1');
+        expect(b._name).toBe('Bean1');
     });
 
     it("get(): not found", function() {
@@ -163,8 +163,8 @@ describe("Bean test suite: ", function() {
     it("get(): found", function() {
         const beans = new Beans({ baseDir: '' });
         beans.create('Bean1');
-        const b = beans.get('bean1');
-        expect(b._name).toBe('bean1');
+        const b = beans.get('Bean1');
+        expect(b._name).toBe('Bean1');
     });
 
     it("init(): happy", function() {
@@ -173,13 +173,13 @@ describe("Bean test suite: ", function() {
         beans.create('Bean2');
         beans.init();
 
-        const b1 = beans.get('bean1');
+        const b1 = beans.get('Bean1');
         expect(b1.initCounter).toBe(1);
 
-        const b2 = beans.get('bean2');
+        const b2 = beans.get('Bean2');
         expect(b2.initCounter).toBe(1);
 
-        const b3 = beans.get('bean3');
+        const b3 = beans.get('Bean3');
         expect(b3.initCounter).toBe(0);
     });
 

@@ -72,7 +72,7 @@ class Beans {
 
     create(beanModulePath, name) {
         if (!name) {
-            name = _.lowerFirst(Path.parse(beanModulePath).name);
+            name = Path.parse(beanModulePath).name;
         }
 
         if (this._all[name]) throw new Error(`duplicated bean: ${name}`);
