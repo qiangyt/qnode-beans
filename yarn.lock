@@ -2036,13 +2036,6 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
 
-json-log4js@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/json-log4js/-/json-log4js-1.0.0.tgz#4b8c63a50d86c97403975a5a13477d352efc6105"
-  dependencies:
-    log4js "2.3.0"
-    sprintf-js "1.1.1"
-
 json-schema-traverse@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
@@ -2585,9 +2578,9 @@ q@~1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
 
-qnode-log@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/qnode-log/-/qnode-log-1.0.1.tgz#aae8460fa77637271ab1bad52afe6b357119d553"
+qnode-log@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/qnode-log/-/qnode-log-1.0.2.tgz#e5a0fd34d066decdb7c992ff9cfd7b5086647e4e"
   dependencies:
     log4js "2.3.0"
     sprintf-js "1.1.1"
