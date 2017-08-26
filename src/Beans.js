@@ -28,33 +28,46 @@ class Beans {
         return this._all;
     }
 
-    init() {
+    initBean(bean) {
+        const name = bean._name;
+
+        if (!bean.init) {
+            this._logger.debug('no init() method on bean: %s', name);
+        } else {
+            this._logger.debug('begin initing bean: %s', name);
+            bean.init();
+            this._logger.debug('inited bean: %s', name);
+        }
+    }
+
+    init(notFirstTime) {
+        if (notFirstTime) this._logger.debug('found more beans...');
+        else this._logger.info('initing');
+
         const beansInited = this._beansInited;
-        const logger = this._logger;
         const all = _.clone(this._all);
 
         for (let name in all) {
             if (beansInited[name]) continue;
 
-            const b = all[name];
-            if (b.init) {
-                logger.debug('begin initing bean: %s', name);
-                b.init();
-                logger.debug('inited bean: %s', name);
-            }
-            beansInited[name] = b;
+            const bean = all[name];
+            this.initBean(bean);
+            beansInited[name] = bean;
         }
 
         if (_.size(this._all) === _.size(beansInited)) {
             // no any more beans are dynamically created during bean.init();
+            this._logger.info('inited');
             return;
         }
 
-        this.init();
+        this.init(true);
     }
 
     render(bean, name, beanModuleAsClass) {
         const bname = bean._name = name || bean._name;
+
+        this._logger.debug('rendering bean: %s', bname);
 
         bean._module = beanModuleAsClass;
         bean._logger = new Logger(bname);
@@ -65,6 +78,8 @@ class Beans {
         bean._config = config;
 
         bean._beans = this;
+
+        this._logger.debug('rendered bean: %s', bname);
     }
 
     static resolveBaseDir(mainPath) {
@@ -81,6 +96,8 @@ class Beans {
             name = Path.parse(beanModulePath).name;
         }
 
+        this._logger.debug('creating bean "%s" from module: %s', name, beanModulePath);
+
         if (this._all[name]) throw new Error(`duplicated bean: ${name}`);
 
         /* eslint global-require: "off" */
@@ -91,7 +108,7 @@ class Beans {
 
         this._all[name] = r;
 
-        this._logger.debug('loaded bean %s from module: %s', name, beanModulePath);
+        this._logger.debug('created bean "%s" from module: %s', name, beanModulePath);
 
         return r;
     }
@@ -113,6 +130,7 @@ const _D = Beans.DEFAULT = new Beans(global.config);
 Beans.prepare = _D.prepare.bind(_D);
 Beans.all = () => _D.all;
 Beans.init = _D.init.bind(_D);
+Beans.initBean = _D.initBean.bind(_D);
 Beans.render = _D.render.bind(_D);
 Beans.create = _D.create.bind(_D);
 Beans.load = _D.load.bind(_D);
