@@ -40,6 +40,11 @@ class Beans {
         }
     }
 
+    renderThenInitBean(bean, name, beanModuleAsClass) {
+        this.render(bean, name, beanModuleAsClass);
+        this.initBean(bean);
+    }
+
     init(notFirstTime) {
         if (notFirstTime) this._logger.debug('found more beans...');
         else this._logger.info('initing');
@@ -133,6 +138,7 @@ Beans.prepare = _D.prepare.bind(_D);
 Beans.all = () => _D.all;
 Beans.init = _D.init.bind(_D);
 Beans.initBean = _D.initBean.bind(_D);
+Beans.renderThenInitBean = _D.renderThenInitBean.bind(_D);
 Beans.render = _D.render.bind(_D);
 Beans.create = _D.create.bind(_D);
 Beans.load = _D.load.bind(_D);

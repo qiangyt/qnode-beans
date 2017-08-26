@@ -1,6 +1,6 @@
 {
     "name": "qnode-beans",
-    "version": "1.0.11",
+    "version": "1.0.13",
     "description": "Simple node.js DI/IoC",
     "main": "src/Beans.js",
     "scripts": {
