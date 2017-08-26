@@ -53,6 +53,8 @@ class Beans {
             const bean = all[name];
             this.initBean(bean);
             beansInited[name] = bean;
+
+            this._logger.debug('');
         }
 
         if (_.size(this._all) === _.size(beansInited)) {
@@ -105,6 +107,7 @@ class Beans {
 
         const r = new clazz();
         this.render(r, name, clazz);
+        this._logger.debug('');
 
         this._all[name] = r;
 
