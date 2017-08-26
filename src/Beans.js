@@ -32,11 +32,11 @@ class Beans {
         const name = bean._name;
 
         if (!bean.init) {
-            this._logger.debug('no init() method on bean: %s', name);
+            this._logger.debug('no init() method on bean: %s\n', name);
         } else {
             this._logger.debug('initing bean: %s', name);
             bean.init();
-            this._logger.debug('inited bean: %s', name);
+            this._logger.debug('inited bean: %s\n', name);
         }
     }
 
@@ -47,7 +47,7 @@ class Beans {
 
     init(notFirstTime) {
         if (notFirstTime) this._logger.debug('found more beans...');
-        else this._logger.info('initing');
+        else this._logger.info('initing\n');
 
         const beansInited = this._beansInited;
         const all = _.clone(this._all);
@@ -64,7 +64,7 @@ class Beans {
 
         if (_.size(this._all) === _.size(beansInited)) {
             // no any more beans are dynamically created during bean.init();
-            this._logger.info('inited');
+            this._logger.info('inited\n');
             return;
         }
 
