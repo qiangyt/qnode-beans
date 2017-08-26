@@ -107,11 +107,10 @@ class Beans {
 
         const r = new clazz();
         this.render(r, name, clazz);
-        this._logger.debug('');
 
         this._all[name] = r;
 
-        this._logger.debug('created bean "%s" from module: %s', name, beanModulePath);
+        this._logger.debug('created bean "%s" from module: %s\n', name, beanModulePath);
 
         return r;
     }
