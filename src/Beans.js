@@ -34,7 +34,7 @@ class Beans {
         if (!bean.init) {
             this._logger.debug('no init() method on bean: %s', name);
         } else {
-            this._logger.debug('begin initing bean: %s', name);
+            this._logger.debug('initing bean: %s', name);
             bean.init();
             this._logger.debug('inited bean: %s', name);
         }
