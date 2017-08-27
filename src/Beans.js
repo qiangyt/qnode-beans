@@ -1,6 +1,7 @@
 const Logger = require('qnode-log');
 const _ = require('lodash');
 const Path = require('path');
+const Fs = require('fs');
 
 class Beans {
 
@@ -90,10 +91,28 @@ class Beans {
     static resolveBaseDir(mainPath) {
         mainPath = mainPath || process.mainModule.filename;
         const posOfNM = mainPath.indexOf('node_modules');
+
         if (posOfNM >= 0) {
             return mainPath.substring(0, posOfNM - 1);
         }
-        return Path.dirname(mainPath);
+
+        let dir = mainPath;
+        while (true) {
+            let r = Path.dirname(dir);
+            if (r === dir) {
+                throw new Error('failed to resolve base dir: ' + mainPath);
+            }
+            dir = r;
+
+            /* eslint no-sync: "off" */
+            let stat;
+            try {
+                stat = Fs.statSync(Path.join(r, 'node_modules'));
+                if (stat.isDirectory()) {
+                    return r;
+                }
+            } catch (e) {}
+        }
     }
 
     create(beanModulePath, name) {
