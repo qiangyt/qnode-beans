@@ -3,13 +3,24 @@ const _ = require('lodash');
 const Path = require('path');
 const Fs = require('fs');
 
+//TODO: register Beans self as bean
+
 class Beans {
 
     constructor(config) {
         this._logger = new Logger('Beans');
         this._all = {};
         this._beansInited = {};
-        const cfg = this._config = config || global.config || {};
+
+        let cfg;
+        if( config ) cfg = config;
+        else if (global.config) {
+            if(global.config.Beans) {
+                cfg = global.config.Beans;
+            }
+        }
+        this._config = cfg = cfg || {};
+
         this.baseDir = (cfg.baseDir === null || cfg.baseDir === undefined) ? Beans.resolveBaseDir() : cfg.baseDir;
     }
 
@@ -154,7 +165,7 @@ class Beans {
 
 }
 
-const _D = Beans.DEFAULT = new Beans(global.config);
+const _D = Beans.DEFAULT = new Beans();
 
 Beans.prepare = _D.prepare.bind(_D);
 Beans.all = () => _D.all;
