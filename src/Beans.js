@@ -109,9 +109,14 @@ class Beans {
             try {
                 stat = Fs.statSync(Path.join(r, 'node_modules'));
                 if (stat.isDirectory()) {
-                    return r;
+                    stat = Fs.statSync(Path.join(r, 'package.json'));
+                    if (stat.isFile()) {
+                        return r;
+                    }
                 }
-            } catch (e) {}
+            } catch (e) {
+                dir = r;
+            }
         }
     }
 

@@ -4,6 +4,22 @@ const SRC = '../src';
 const Beans = require(`${SRC}/Beans`);
 
 const mockRequire = require('mock-require');
+const mockFs = require('mock-fs');
+const mockFsObjects = {
+    "/": {
+        'c': {
+            'github': {
+                'TestApp': {
+                    "package.json": "",
+                    "node_modules": {},
+                    "src": {
+                        "index.js": ""
+                    }
+                }
+            },
+        }
+    }
+}
 
 // SpiedBean1 mocks a regular bean module
 class SpiedBean1 {
@@ -49,9 +65,17 @@ mockRequire('Bean3', SpiedBean3);
 
 describe("Bean test suite: ", function() {
 
+    beforeAll(function() {
+        mockFs(mockFsObjects, { createCwd: false, createTmp: false });
+    });
+
+    afterAll(function() {
+        mockFs.restore();
+    });
+
     it("resolveBaseDir(): take main path", function() {
-        const d = Beans.resolveBaseDir('/home/qiangyt/qnode_beans/src/index.js');
-        expect(d).toBe('/home/qiangyt/qnode_beans/src');
+        const d = Beans.resolveBaseDir('/c/github/TestApp/src/index.js');
+        expect(d).toBe('/c/github/TestApp');
     });
 
     it("resolveBaseDir(): take default", function() {
