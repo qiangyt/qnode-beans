@@ -131,24 +131,43 @@ class Beans {
         }
     }
 
-    create(beanModulePath, name) {
+    create(beanModulePathOrClass, name) {
+        let beanModulePath, beanClass;
+        if( 'string' === typeof beanModulePathOrClass ) {
+            beanModulePath = beanModulePathOrClass;
+        } else {
+            beanClass = beanModulePathOrClass;
+        }
+
         if (!name) {
+            if( !beanModulePath ) throw new Error('bean name is not specified');
             name = Path.parse(beanModulePath).name;
         }
 
-        this._logger.debug('creating bean "%s" from module: %s', name, beanModulePath);
+        if( beanModulePath ) {
+            this._logger.debug('creating bean "%s" from module: %s', name, beanModulePath);
+        } else {
+            this._logger.debug('creating bean "%s"', name);
+        }
 
         if (this._all[name]) throw new Error(`duplicated bean: ${name}`);
 
-        /* eslint global-require: "off" */
-        const clazz = require(Path.join(this.baseDir, beanModulePath));
+        if( !beanClass ) {
+            /* eslint global-require: "off" */
+            beanClass = require(Path.join(this.baseDir, beanModulePath));
+        }
 
-        const r = new clazz();
-        this.render(r, name, clazz);
+
+        const r = new beanClass();
+        this.render(r, name, r);
 
         this._all[name] = r;
 
-        this._logger.debug('created bean "%s" from module: %s\n', name, beanModulePath);
+        if( beanModulePath ) {
+            this._logger.debug('created bean "%s" from module: %s\n', name, beanModulePath);
+        } else {
+            this._logger.debug('created bean "%s"', name);
+        }
 
         return r;
     }

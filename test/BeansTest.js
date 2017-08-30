@@ -92,7 +92,6 @@ describe("Bean test suite: ", function() {
         expect(b instanceof SpiedBean1).toBeTruthy();
         expect(b._name).toBe('bean1');
         expect(b._logger).toBeDefined();
-        expect(b._module).toEqual(SpiedBean1);
         expect(b._config.x).toEqual('y');
         expect(b._beans).toEqual(beans);
         expect(beans.all.bean1).toEqual(b);
