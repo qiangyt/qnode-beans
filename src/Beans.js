@@ -24,7 +24,7 @@ class Beans {
         this.baseDir = (cfg.baseDir === null || cfg.baseDir === undefined) ? Beans.resolveBaseDir() : cfg.baseDir;
     }
 
-    prepare(name, beanConfig) {
+    config(name, beanConfig) {
         if (this._all[name]) {
             throw new Error(`cannot configure the already-created bean named "${name}"`);
         }
@@ -167,7 +167,7 @@ class Beans {
 
 const _D = Beans.DEFAULT = new Beans();
 
-Beans.prepare = _D.prepare.bind(_D);
+Beans.config = _D.config.bind(_D);
 Beans.all = () => _D.all;
 Beans.init = _D.init.bind(_D);
 Beans.initBean = _D.initBean.bind(_D);

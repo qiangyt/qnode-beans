@@ -86,7 +86,7 @@ describe("Bean test suite: ", function() {
     it("create(): happy", function() {
         const cfg = { x: 'y' };
         const beans = new Beans({ baseDir: '' });
-        beans.prepare('bean1', cfg);
+        beans.config('bean1', cfg);
         const b = beans.create('Bean1', 'bean1');
 
         expect(b instanceof SpiedBean1).toBeTruthy();
@@ -120,11 +120,11 @@ describe("Bean test suite: ", function() {
         }
     });
 
-    it("prepare(): happy", function() {
+    it("config(): happy", function() {
         const beans = new Beans({ baseDir: '' });
 
         const cfg = { x: 'y' };
-        beans.prepare('Bean1', cfg);
+        beans.config('Bean1', cfg);
         beans.create('Bean1');
         beans.init();
 
@@ -132,27 +132,27 @@ describe("Bean test suite: ", function() {
         expect(b._config.x).toBe('y');
     });
 
-    it("prepare(): fail", function() {
+    it("config(): fail", function() {
         const cfg = { x: 'y' };
         const beans = new Beans({ baseDir: '' });
         beans.create('Bean1');
 
         try {
-            beans.prepare('Bean1', cfg);
+            beans.config('Bean1', cfg);
             fail('exception is expected to raise');
         } catch (e) {
             expect(e).toBeDefined();
         }
     });
 
-    it("prepare(): merge", function() {
+    it("config(): merge", function() {
         const beans = new Beans({ baseDir: '' });
 
         const cfg1 = { x1: 'y1' };
-        beans.prepare('Bean1', cfg1);
+        beans.config('Bean1', cfg1);
 
         const cfg2 = { x1: 'y2', x2: 'y3' };
-        beans.prepare('Bean1', cfg2);
+        beans.config('Bean1', cfg2);
 
         beans.create('Bean1');
         beans.init();
