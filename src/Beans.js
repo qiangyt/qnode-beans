@@ -13,9 +13,9 @@ class Beans {
         this._beansInited = {};
 
         let cfg;
-        if( config ) cfg = config;
+        if (config) cfg = config;
         else if (global.config) {
-            if(global.config.Beans) {
+            if (global.config.Beans) {
                 cfg = global.config.Beans;
             }
         }
@@ -133,18 +133,19 @@ class Beans {
 
     create(beanModulePathOrClass, name) {
         let beanModulePath, beanClass;
-        if( 'string' === typeof beanModulePathOrClass ) {
+        if ('string' === typeof beanModulePathOrClass) {
             beanModulePath = beanModulePathOrClass;
         } else {
             beanClass = beanModulePathOrClass;
         }
 
         if (!name) {
-            if( !beanModulePath ) throw new Error('bean name is not specified');
-            name = Path.parse(beanModulePath).name;
+            if (beanModulePath) name = Path.parse(beanModulePath).name;
+            else if (beanClass) name = beanClass.name;
+            else throw new Error(`dont know bean name: ${beanModulePathOrClass}`);
         }
 
-        if( beanModulePath ) {
+        if (beanModulePath) {
             this._logger.debug('creating bean "%s" from module: %s', name, beanModulePath);
         } else {
             this._logger.debug('creating bean "%s"', name);
@@ -152,7 +153,7 @@ class Beans {
 
         if (this._all[name]) throw new Error(`duplicated bean: ${name}`);
 
-        if( !beanClass ) {
+        if (!beanClass) {
             /* eslint global-require: "off" */
             beanClass = require(Path.join(this.baseDir, beanModulePath));
         }
@@ -163,7 +164,7 @@ class Beans {
 
         this._all[name] = r;
 
-        if( beanModulePath ) {
+        if (beanModulePath) {
             this._logger.debug('created bean "%s" from module: %s\n', name, beanModulePath);
         } else {
             this._logger.debug('created bean "%s"', name);
