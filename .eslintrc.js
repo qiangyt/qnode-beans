@@ -186,7 +186,7 @@ module.exports = {
         'operator-assignment': ["error", "always"],
         //"require-jsdoc": ["error", { "require": { "FunctionDeclaration": true, "MethodDefinition": true, "ClassDeclaration": true },
 
-        "arrow-body-style": ["error", "as-needed"],
+        "arrow-body-style": "off",
         "arrow-parens": ["error", "as-needed"],
         'constructor-super': "error",
         'no-class-assign': 'error',

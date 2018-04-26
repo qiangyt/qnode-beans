@@ -87,7 +87,7 @@ class Beans {
         this._logger.debug('rendering bean: %s', bname);
 
         bean._module = beanModuleAsClass;
-        bean._logger = new Logger(bname);
+        if(!bean._logger) bean._logger = new Logger(bname);
 
         const config = {};
         _.merge(config, this._config[bname] || {});
