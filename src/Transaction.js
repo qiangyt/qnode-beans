@@ -1,7 +1,7 @@
 const QError = require('qnode-error');
 const InternalError = QError.InternalError;
 const Logger = require('qnode-log');
-const Misc = require('./util/Misc');
+const Misc = require('./Misc');
 const logger = new Logger('Transaction');
 
 
