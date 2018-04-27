@@ -1,6 +1,6 @@
 {
     "name": "qnode-beans",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "description": "Simple node.js DI/IoC",
     "main": "src/index.js",
     "scripts": {
@@ -22,7 +22,7 @@
         "url": "https://github.com/qiangyt/qnode-beans/issues"
     },
     "engines": {
-        "node": ">=6"
+        "node": ">=8"
     },
     "private": false,
     "license": "MIT",
