@@ -40,24 +40,29 @@ class Beans {
         return this._all;
     }
 
-    initBean(bean) {
+    async initBean(bean) {
         const name = bean._name;
 
         if (!bean.init) {
             this._logger.debug('no init() method on bean: %s\n', name);
         } else {
             this._logger.debug('initing bean: %s', name);
-            bean.init();
+            
+            const r = bean.init();
+            if( r && r.then && r.catch ) {
+                await r;
+            }
+            
             this._logger.debug('inited bean: %s\n', name);
         }
     }
 
-    renderThenInitBean(bean, name, beanModuleAsClass) {
+    async renderThenInitBean(bean, name, beanModuleAsClass) {
         this.render(bean, name, beanModuleAsClass);
-        this.initBean(bean);
+        await this.initBean(bean);
     }
 
-    init(notFirstTime) {
+    async init(notFirstTime) {
         if (notFirstTime) this._logger.debug('found more beans...');
         else this._logger.info('initing\n');
 
@@ -68,7 +73,7 @@ class Beans {
             if (beansInited[name]) continue;
 
             const bean = all[name];
-            this.initBean(bean);
+            await this.initBean(bean);
             beansInited[name] = bean;
         }
 
@@ -78,7 +83,7 @@ class Beans {
             return;
         }
 
-        this.init(true);
+        await this.init(true);
     }
 
     render(bean, name, beanModuleAsClass) {
@@ -160,7 +165,7 @@ class Beans {
 
 
         const r = new beanClass();
-        this.render(r, name, r);
+        this.render(r, name, beanClass);
 
         this._all[name] = r;
 

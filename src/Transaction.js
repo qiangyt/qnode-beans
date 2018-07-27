@@ -11,7 +11,7 @@ const logger = new Logger('Transaction');
 module.exports = class Transaction {
 
     constructor( ctx, options ) {
-        this.ctx = ctx;
+        this.ctx = ctx || {};
         this.options = options;
         this.id = Misc.uuid();
         this.resources = [];
@@ -72,6 +72,7 @@ module.exports = class Transaction {
      * 把一个资源排入事务。
      */
     enlist( instance ) {
+        const debug = logger.isDebugEnabled();
 
         if( this.finished || this.finishing ) {
             const msg = 'transaction already finished/finishing';
@@ -86,7 +87,7 @@ module.exports = class Transaction {
         if( !key ) throw new InternalError( 'instance should be NOT undefined/null' );
 
         const instanceLog = {key, ctx: this.ctx};
-        logger.debug( instanceLog, 'enlisting' );
+        if(debug) logger.debug( 'enlisting: %s', instanceLog);
 
         const resources = this.resources;
 
@@ -94,7 +95,7 @@ module.exports = class Transaction {
             const existing = resources[0];
             if( existing.instance.key === key ) {
                 // 重复，但是可以容忍
-                logger.debug( 'enlistment ignored due to duplicated instance key: %s', instanceLog );
+                if(debug) logger.debug( 'enlistment ignored due to duplicated instance key: %s', instanceLog );
                 return Promise.resolve(existing.data);
             }
 
@@ -111,7 +112,7 @@ module.exports = class Transaction {
             if( !data ) throw new InternalError( 'enlisted data should be NOT undefined/null' );
             
             resources.push({instance, data});
-            logger.debug( 'enlisted: %s', instanceLog );
+            if(debug) logger.debug( 'enlisted: %s', instanceLog );
 
             this.ignore = false;
 
@@ -139,8 +140,10 @@ module.exports = class Transaction {
 
 
     commit() {
+        const debug = logger.isDebugEnabled();
+    
         const logObj = this.toLogObject(false);
-        logger.debug( 'committing: %s', logObj );
+        if(debug) logger.debug( 'committing: %s', logObj );
 
         if( this.finished || this.finishing ) {
             const msg = 'transaction already finished/finishing';
@@ -153,20 +156,20 @@ module.exports = class Transaction {
         if( this.resources.length === 0 ) {
             this._setFinishing( logObj, false );
 
-            logger.debug( 'nothing to commit. %s', logObj );
+            if(debug) logger.debug( 'nothing to commit. %s', logObj );
             return Promise.resolve();
         }
 
         const res = this.resources[0];
         this.resources = [];
         
-        logger.debug( 'commit prepared. %s', logObj );
+        if(debug) logger.debug( 'commit prepared. %s', logObj );
 
         return res.instance.commitTx(res.data)
         .then( () => {
             this._setFinishing( logObj, false );
 
-            logger.debug( 'commit-ed. %s', logObj );
+            if(debug) logger.debug( 'commit-ed. %s', logObj );
          } )
         .catch( err => {
             this._setFinishing( logObj, false );
@@ -180,9 +183,10 @@ module.exports = class Transaction {
 
 
     rollback() {
+        const debug = logger.isDebugEnabled();
         
         const logObj = this.toLogObject(false);
-        logger.debug( 'rollbacking. %s', logObj );
+        if(debug) logger.debug( 'rollbacking. %s', logObj );
 
         if( this.finished || this.finishing ) {
             if( this.rollbacked || this.rollbacking ) return Promise.resolve();
@@ -199,7 +203,7 @@ module.exports = class Transaction {
             this._setFinishing( logObj, false );
             this._setRollbacking( logObj, false );
 
-            logger.debug( 'nothing to rollback. %s', logObj );
+            if(debug) logger.debug( 'nothing to rollback. %s', logObj );
             return Promise.resolve();
         }
 
@@ -207,7 +211,7 @@ module.exports = class Transaction {
         const res = this.resources[0];
         this.resources = [];
         
-        logger.debug( 'rollback prepared. %s', logObj );
+        if(debug) logger.debug( 'rollback prepared. %s', logObj );
 
         return res.instance.rollbackTx(res.data)
         .then( () => {

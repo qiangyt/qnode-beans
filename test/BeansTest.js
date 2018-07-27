@@ -115,13 +115,13 @@ describe("Bean test suite: ", function() {
         }
     });
 
-    it("config(): happy", function() {
+    it("config(): happy", async function() {
         const beans = new Beans({ baseDir: '' });
 
         const cfg = { x: 'y' };
         beans.config('Bean1', cfg);
         beans.create('Bean1');
-        beans.init();
+        await beans.init();
 
         const b = beans.load('Bean1');
         expect(b._config.x).toBe('y');
@@ -140,7 +140,7 @@ describe("Bean test suite: ", function() {
         }
     });
 
-    it("config(): merge", function() {
+    it("config(): merge", async function() {
         const beans = new Beans({ baseDir: '' });
 
         const cfg1 = { x1: 'y1' };
@@ -150,7 +150,7 @@ describe("Bean test suite: ", function() {
         beans.config('Bean1', cfg2);
 
         beans.create('Bean1');
-        beans.init();
+        await beans.init();
         const b = beans.load('Bean1');
         expect(b._config.x1).toBe('y2');
         expect(b._config.x2).toBe('y3');
@@ -186,11 +186,11 @@ describe("Bean test suite: ", function() {
         expect(b._name).toBe('Bean1');
     });
 
-    it("init(): happy", function() {
+    it("init(): happy", async function() {
         const beans = new Beans({ baseDir: '' });
         beans.create('Bean1');
         beans.create('Bean2');
-        beans.init();
+        await beans.init();
 
         const b1 = beans.get('Bean1');
         expect(b1.initCounter).toBe(1);
