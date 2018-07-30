@@ -1,8 +1,12 @@
 /* eslint global-require: 'off' */
 
 module.exports = {
+    Bean: require('./Bean'),
     Beans: require('./Beans'),
-    Misc: require('./Misc'),
-    Transaction: require('./Transaction'),
-    TransactionTemplate: require('./TransactionTemplate')
+    Config: require('./Config').default,
+    Errors: require('./Errors'),
+    ErrorType: require('./ErrorType').default,
+    Exception: require('./Exception').default,
+    Logger: require('./Logger'),
+    util: require('./util')
 };

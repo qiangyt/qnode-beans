@@ -14,8 +14,14 @@
             "runtimeArgs": [
                 "--nolazy"
             ],
+            "env": {
+                "NODE_ENV": "test",
+                "QNODE_PRODUCT": "qnode",
+                "QNODE_MODULE": "beans",
+                "QNODE_LOG_LEVEL": "error"
+            },
             "sourceMaps": false,
-            "outDir": null
+            "outFiles": []
         }
 
     ]

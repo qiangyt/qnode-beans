@@ -1,21 +1,11 @@
 /* eslint no-undef: 'off' */
 
-const SRC = '../src';
+const SRC = '../dist';
 const Beans = require(`${SRC}/Beans`);
 
 const mockRequire = require('mock-require');
 const mockFs = require('mock-fs');
-const mockFsObjects = {
-    'github': {
-        'TestApp': {
-            "package.json": "",
-            "node_modules": {},
-            "src": {
-                "index.js": ""
-            }
-        }
-    }
-};
+
 
 // SpiedBean1 mocks a regular bean module
 class SpiedBean1 {
@@ -59,6 +49,20 @@ class SpiedBean3 {
 
 mockRequire('Bean3', SpiedBean3);
 
+
+const mockFsObjects = {
+    'github/TestApp': {
+        //'TestApp': {
+            "package.json": "",
+            "node_modules": {},
+            "src": {
+                "index.js": ""
+            }
+        //}
+    }
+};
+
+// now test suite
 describe("Bean test suite: ", function() {
 
     beforeAll(function() {
@@ -104,11 +108,11 @@ describe("Bean test suite: ", function() {
     });
 
     it("create(): duplicated", function() {
-        const beans = new Beans({ baseDir: '' });
+        const beans = new Beans({ baseDir: '', logDisabled:true });
         beans.create('Bean1');
 
         try {
-            beans.create('Bean1');
+            beans.create2('Bean1');
             fail('exception is expected to raise');
         } catch (e) {
             expect(e).toBeDefined();

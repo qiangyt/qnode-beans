@@ -1,0 +1,39 @@
+{
+    "compileOnSave": true,
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ],
+    "compilerOptions": {
+        "charset": "utf8",
+        "declaration": true,
+        "declarationDir": "dist",
+        "outDir": "dist",
+        "diagnostics": true,
+        "emitBOM": false,
+        "emitDecoratorMetadata": false,
+        "experimentalDecorators": false,
+        "alwaysStrict": true,
+        "locale": "en-us",
+        "lib": ["es7"],
+        "newLine": "LF",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noEmitOnError": true,
+        "target": "es2017",
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "removeComments": false,
+        "sourceMap": true,
+        "pretty": true
+    }
+}

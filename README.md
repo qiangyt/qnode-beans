@@ -1,6 +1,6 @@
 # qnode-beans
 
-Simple node.js DI/IoC, by Qiang Yiting
+node.js native IoC
 
 # build status
 https://travis-ci.org/qiangyt/qnode-beans
