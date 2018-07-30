@@ -224,48 +224,6 @@ export default class Beans {
         return r;
     }
 
-    create2(beanModulePathOrClass:string|any, beanName:string = undefined) {
-
-        const log = this._logger;
-
-        let beanModulePath:string, beanClass;
-        if ('string' === typeof beanModulePathOrClass) {
-            beanModulePath = beanModulePathOrClass;
-        } else {
-            beanClass = beanModulePathOrClass;
-        }
-
-        if (!beanName) {
-            if (beanModulePath) beanName = Path.parse(beanModulePath).name;
-            else if (beanClass) beanName = beanClass.name;
-            else {
-                if(log) log.error({beanModulePathOrClass}, 'dont know bean name');
-                throw new Error(`dont know bean name: ${beanModulePathOrClass}`);
-            }
-        }
-        
-        if(log) log.debug({beanName, beanModulePath}, 'creating bean');
-
-        if (this._all[beanName]) {
-            log.error({beanName}, 'duplicated bean');
-            throw new Error(`duplicated bean: ${beanName}`);
-        }
-
-        if (!beanClass) {
-            /* eslint global-require: "off" */
-            beanClass = require(Path.join(this._baseDir, beanModulePath));
-        }
-
-
-        const r = new beanClass();
-        this.render(r, beanName, beanClass);
-
-        this._all[beanName] = r;
-
-        if(log) log.debug({beanName, beanModulePath}, 'created bean');
-        return r;
-    }
-
 
     load(name:string) {
         const r = this.get(name);

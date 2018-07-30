@@ -112,7 +112,7 @@ describe("Bean test suite: ", function() {
         beans.create('Bean1');
 
         try {
-            beans.create2('Bean1');
+            beans.create('Bean1');
             fail('exception is expected to raise');
         } catch (e) {
             expect(e).toBeDefined();
