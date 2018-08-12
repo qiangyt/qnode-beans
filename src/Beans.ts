@@ -4,6 +4,7 @@ import Bean from './Bean';
 import * as _ from 'lodash';
 import * as Path from 'path';
 import * as Fs from 'fs';
+const mockRequire = require('mock-require');
 
 //TODO: register Beans self as bean
 
@@ -59,6 +60,9 @@ export default class Beans {
 
 
     async initBean(bean:Bean) {
+        if (bean._inited) return;
+        bean._inited = true;
+
         const log = this._logger;
         const logArgs = {beanName:bean._name};
 
@@ -186,6 +190,7 @@ export default class Beans {
 
         const log = this._logger;
 
+        // deduce either bean module path, or bean class
         let beanModulePath:string, beanClass;
         if ('string' === typeof beanModulePathOrClass) {
             beanModulePath = beanModulePathOrClass;
@@ -193,6 +198,7 @@ export default class Beans {
             beanClass = beanModulePathOrClass;
         }
 
+        // deduce bean name
         if (!beanName) {
             if (beanModulePath) beanName = Path.parse(beanModulePath).name;
             else if (beanClass) beanName = beanClass.name;
@@ -209,16 +215,24 @@ export default class Beans {
             throw new Error(`duplicated bean: ${beanName}`);
         }
 
+        let beanModuleFqPath, hookIt = false;
         if (!beanClass) {
             /* eslint global-require: "off" */
-            beanClass = require(Path.join(this._baseDir, beanModulePath));
+            // if bean class is not provided, then we could hook the bean creation
+            beanModuleFqPath = Path.join(this._baseDir, beanModulePath);
+            beanClass = require(beanModuleFqPath);
+            hookIt = true;
         }
-
 
         const r = new beanClass();
         this.render(r, beanName, beanClass);
 
         this._all[beanName] = r;
+
+        if (hookIt) {
+            mockRequire(beanModuleFqPath, function() { return r; });
+        }
+
 
         if(log) log.debug({beanName, beanModulePath}, 'created bean');
         return r;

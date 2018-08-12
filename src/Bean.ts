@@ -9,6 +9,7 @@ export default class Bean {
     public _logger:Logger;
     public _beans:Beans;
     public _module:NodeModule;
+    public _inited:boolean;
 
 
     init():any {
