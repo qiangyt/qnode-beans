@@ -27,7 +27,7 @@
     "private": false,
     "license": "MIT",
     "dependencies": {
-        "lodash": "4.17.15",
+        "lodash": "4.17.21",
         "qnode-error": "1.0.7",
         "qnode-log": "1.0.5",
         "uuid": "3.3.3"
